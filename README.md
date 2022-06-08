@@ -1,13 +1,13 @@
 # Quick Start
 
-i.  Add private key to .env
-ii. npm install
-iii.    TEST: `truffle test --network testnet`
-iv. **If deploy on a testnet, get use network faucet
-v. **Migrate contract to testnet:** `truffle migrate --reset --skip-dry-run --network testnet`
-vi. **Mint NFTs** `truffle exec scripts/mint.js --network testnet`
-vii. **Migrate contract to mainnet:** `truffle migrate --reset --skip-dry-run --network mainnet`
-viii. **Mint NFT on mainnet:** `truffle exec scripts/mint.js --network mainnet`
+-   Add private key to .env
+-   npm install
+-   TEST: `truffle test --network testnet`
+-   **If deploy on a testnet, get use network faucet
+-   **Migrate contract to testnet:** `truffle migrate --reset --skip-dry-run --network testnet`
+-   **Mint NFTs** `truffle exec scripts/mint.js --network testnet`
+-   **Migrate contract to mainnet:** `truffle migrate --reset --skip-dry-run --network mainnet`
+-   **Mint NFT on mainnet:** `truffle exec scripts/mint.js --network mainnet`
 
 ## Poem Stansa NFT
 
