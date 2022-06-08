@@ -1,0 +1,19 @@
+{
+  "name": "adder calculator",
+  "version": "1.0.0",
+  "description": "calculator python program",
+  "dependencies": {
+    "@harmony-js/core": "^0.1.57",
+    "@harmony-js/utils": "^0.1.56",
+    "@openzeppelin/contracts": "3.4.1",
+    "@trufflesuite/web3-provider-engine": "^15.0.14",
+    "dotenv": "^8.2.0",
+    "solc": "^0.8.0",
+    "truffle": "^5.2.3",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "^1.2.2"
+  }
+}
