@@ -1,32 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.8.0;
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
+//import "@openzeppelin/contracts/math/SafeMath.sol";
 
 library NFTLibrary {
-    
-    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
-        if (_i == 0) {
-            return "0";
-        }
-        uint j = _i;
-        uint len;
-        while (j != 0) {
-            len++;
-            j /= 10;
-        }
-        bytes memory bstr = new bytes(len);
-        uint k = len;
-        while (_i != 0) {
-            k = k-1;
-            uint8 temp = (48 + uint8(_i - _i / 10 * 10));
-            bytes1 b1 = bytes1(temp);
-            bstr[k] = b1;
-            _i /= 10;
-        }
-        return string(bstr);
-    }
-
 
     string internal constant TABLE =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -104,6 +81,7 @@ library NFTLibrary {
         return result;
     }
 
+
     /**
      * @dev Converts a `uint256` to its ASCII `string` decimal representation.
      */
@@ -126,24 +104,6 @@ library NFTLibrary {
         return string(buffer);
     }
 
-    function parseInt(string memory _a)
-        internal
-        pure
-        returns (uint8 _parsedInt)
-    {
-        bytes memory bresult = bytes(_a);
-        uint8 mint = 0;
-        for (uint8 i = 0; i < bresult.length; i++) {
-            if (
-                (uint8(uint8(bresult[i])) >= 48) &&
-                (uint8(uint8(bresult[i])) <= 57)
-            ) {
-                mint *= 10;
-                mint += uint8(bresult[i]) - 48;
-            }
-        }
-        return mint;   
-}
 
 
 function substring(
@@ -159,16 +119,4 @@ function substring(
         return string(result);
     }
 
-
-    function isContract(address account) internal view returns (bool) {
-        // This method relies on extcodesize, which returns 0 for contracts in
-        // construction, since the code is only stored at the end of the
-        // constructor execution.
-
-        uint256 size;
-        assembly {
-            size := extcodesize(account)
-        }
-        return size > 0;
-    }
 }

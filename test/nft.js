@@ -26,7 +26,7 @@ contract("NFT", (accounts) => {
     console.log(`symbol.call( )`);
     console.log(JSON.stringify(  r, null , 2 ) );
     
-    r = await inst.baseURI.call(); 
+    r = await inst.nftBaseURI.call(); 
     console.log(`baseURI.call( )`);
     console.log(JSON.stringify(  r, null , 2 ) );
 
@@ -40,7 +40,7 @@ contract("NFT", (accounts) => {
     
     let r;
     
-    r = await inst.baseURI.call();
+    r = await inst.nftBaseURI.call();
     console.log(`baseURI.call()`);  
     console.log(JSON.stringify(  r, null , 2 ) );
     
@@ -436,8 +436,43 @@ contract("NFT & NFTMarket", (accounts) => {
      console.log(JSON.stringify(  r, null , 2 ) );
   
   });  
+    
+  const test10= it("mint a bunch", async () => {
+    let nftInst = await NFT.deployed();
+    console.log(`NFT instance@: ${ nftInst.address }`);
+    assertAddress( nftInst.address );
+    
+    let r;
+
+    const arr = [ '-the-balance-of-power.png', 
+          '-choose-your-gods.png',
+          'Life giving all powerful one, Light bringer to herald sweet dawn, The father, the sun of heaven, The name for god in countless tongues.',   
+          '-born-again.png',
+          'Reflected out from the inside, Our Gods can never truly die, Earthly beings here for the ride, Smiled down on by gods who guide.',
+          '-lost-way.png',
+          "Pull all shadows out of their hides, Face the chaos with open eyes, You don't know without having tried, Never turn back, walk on with pride.",
+          '-tamed-monsters.png',
+          'Day was destroyed but now reborn, Cold will gradually become warm, Dew and wind act to cool skin, Eyes wake as skies lighten.',
+          '-the-eternal-battle.png',
+          "Day was set aside from the night, Owing to the creator's might, The artist's blue hour of light, Makes many a magical sight.",
+          '-towers-fall.png',
+    ];
+
+    let tkn;
+    for ( let i =0; i < arr.length; i++) {
+        r = await nftInst.mint( arr[i++] , { from:accounts[0] } );
+        console.log(`mint()`);
+        console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+        tkn = r["receipt"]["logs"][0]["args"]["tokenId"];
+
+        r = await nftInst.tokenURI.call( tkn ); 
+        console.log(`tokenURI( ${1} )`);
+        console.log(JSON.stringify(  r, null , 2 ) );
+    }
 
  });
+
+});
 
 const  assertRevert = async (promise, message) => {
   let noFailureMessage;

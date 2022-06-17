@@ -11,7 +11,7 @@ import "./NFTLibrary.sol";
 contract NFT is ERC721, Ownable {
 
     mapping(uint256 => string) internal tokenData;
-    string _baseURI = "https://www.poetry.me.uk/nfts/";
+    string public nftBaseURI = "https://www.poetry.me.uk/nfts/";
 
     constructor() ERC721("Poetry NFTs", "POETRY") { }
 
@@ -35,25 +35,22 @@ contract NFT is ERC721, Ownable {
   
         }
 
-    function textBody(string memory _s) internal pure returns (string memory){
+    function textBody(string memory _s) public pure returns (string memory){
         string memory _text;
-        string memory _tfront = '<text lengthAdjust="spacing" textLength="290" x="5" y="';
+        string memory _tfront = '<text lengthAdjust="spacing" textLength="284" x="8" y="';
         string memory _tend = '</text>';
         bytes memory _b = bytes(_s);
+        uint len = _b.length;
         uint count =0;
         uint last = 0;
-        for(uint i = 0; i < bytes(_s).length ; i++){
-            if ( uint8(_b[i]) == (0xA) ) {
-                _text = string(abi.encodePacked(_text,_tfront, NFTLibrary.toString(count*20 + 120),'">', NFTLibrary.substring(_s, last , i ) ,_tend));
+        for(uint i = 0; i < len ; i++){
+            if ( uint8(_b[i]) == (0x2E) || uint8(_b[i]) == (0x2C) || (len-1) == i ) {
+                _text = string(abi.encodePacked(_text,_tfront, NFTLibrary.toString(count*20 + 120),'">', NFTLibrary.substring(_s, last , ( i+1 ) ) ,_tend));
                 count++;
-                if ( count == 3) {
-                    _text = string(abi.encodePacked(_text,_tfront,'180">', NFTLibrary.substring(_s, i,_b.length ) ,_tend));
-                    return _text;
-                }
-                last = i;
+                last = i+2;
             }
         }
-        return string(abi.encodePacked(_tfront,'120">', _s,_tend));
+        return _text;
     }
 
     function tokenURI(uint256 _tokenId) public view virtual override returns (string memory) {
@@ -61,7 +58,7 @@ contract NFT is ERC721, Ownable {
 
         bytes memory _data = bytes( tokenData[_tokenId] );
         string memory _url;
-        if ( _data[0] == 0x2D && bytes(_baseURI).length > 5 ) _url = string( abi.encodePacked(_baseURI, string(_data) ) );
+        if ( _data[0] == 0x2D && bytes(nftBaseURI).length > 5 ) _url = string( abi.encodePacked(nftBaseURI, string(_data) ) );
         else {
             for ( uint8 i = 0 ; i < _data.length ; i++ ) {
                 if ( _data[ i ] == 0x2D ) _data[i] = 0x20;
@@ -87,8 +84,7 @@ contract NFT is ERC721, Ownable {
             string(
                     abi.encodePacked(
                         "data:application/json;base64,",
-                        NFTLibrary.encode(
-                            bytes(
+                        NFTLibrary.encode(bytes(
                                 string(
                                     abi.encodePacked('{"name":"Poetry NFT#',NFTLibrary.toString( _tokenId ),'","id":"',NFTLibrary.toString(_tokenId),
                                         '","description":"Poetry NFTs","image":"',_url,'"}') ) ) ) ) );
@@ -96,16 +92,11 @@ contract NFT is ERC721, Ownable {
     }
 
     function setBaseURI(string memory _base) onlyOwner external {
-        _baseURI = _base;
-    }
-
-
-    function baseURI() public view virtual override returns (string memory) {
-        return _baseURI;
+        nftBaseURI = _base;
     }
 
     function mint( string memory text ) external onlyOwner {
-        require( bytes(text).length <= 512, "Data is too long");
+        require( bytes(text).length <= 256, "Data is too long");
         uint256 _tokenId = totalSupply() + 1;
 
         _mint(msg.sender, _tokenId);
