@@ -10,7 +10,11 @@ const local_url = process.env.LOCAL_0_URL;
 //Testnet
 const testnet_mnemonic = process.env.TESTNET_MNEMONIC;
 const testnet_private_key = process.env.TESTNET_PRIVATE_KEY;
-const testnet_url = process.env.TESTNET_1_URL;
+const testnet_url = process.env.TESTNET_2_URL;
+
+const devnet_mnemonic = process.env.TESTNET_MNEMONIC;
+const devnet_private_key = process.env.TESTNET_PRIVATE_KEY;
+const devnet_url = process.env.DEVNET_0_URL;
 
 //Mainnet
 const mainnet_mnemonic = process.env.MAINNET_MNEMONIC;
@@ -23,7 +27,8 @@ gasPrice = process.env.GAS_PRICE;
 
 const networkId = {
   Mainnet: 1666600000,
-  Testnet: 1666700000
+  Testnet: 1666700000,
+  Devnet: 1666900000
 }
 
 
@@ -63,10 +68,17 @@ module.exports = {
     },
  testnet: {
       provider: () => {
-        return new PrivateKeyProvider(process.env.TESTNET_PRIVATE_KEY, 'https://api.s0.b.hmny.io', networkId.Testnet)
+        return new PrivateKeyProvider(process.env.TESTNET_PRIVATE_KEY, testnet_url, networkId.Testnet)
       },
       network_id: networkId.Testnet
     },
+ devnet: {
+      provider: () => {
+        return new PrivateKeyProvider(process.env.DEVNET_PRIVATE_KEY, devnet_url, networkId.Devnet)
+      },
+      network_id: networkId.Devnet
+    },
+
 
    
     mainnet0: {

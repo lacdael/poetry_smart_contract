@@ -4,12 +4,7 @@ module.exports = async function(callback) {
   try {
     const nft = await NFT.deployed()
     const arr = [
-          '-tamed_monsters.png',
-          "Day was set aside from the night,\nOwing to the creator's might,\nThe artist's blue hour of light,\nMakes many a magical sight.",
-    ];  
-    
-    /*
-          [ '-the-balance-of-power.png', 
+          '-the-balance-of-power.png', 
           '-choose-your-gods.png',
           'Life giving all powerful one,\nLight bringer to herald sweet dawn,\nThe father, the sun of heaven,\nThe name for god in countless tongues.',   
           '-born-again.png',
@@ -21,7 +16,7 @@ module.exports = async function(callback) {
           '-the-eternal-battle.png',
           "Day was set aside from the night,\nOwing to the creator's might,\nThe artist's blue hour of light,\nMakes many a magical sight.",
           '-towers-fall.png',
-    ];*/
+    ];
 
     
     for( let i = 0; i < arr.length; i++ ){

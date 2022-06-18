@@ -22,7 +22,7 @@ contract("NFT", (accounts) => {
           'Reflected out from the inside, Our Gods can never truly die, Earthly beings here for the ride, Smiled down on by gods who guide. ',
           "Pull all shadows out of their hides, Face the chaos with open eyes, You don't know without having tried, Never turn back, walk on with pride. ",
           'Day was destroyed but now reborn, Cold will gradually become warm, Dew and wind act to cool skin, Eyes wake as skies lighten. ',
-          "Day was set aside from the night, Owing to the creator's might, The artist's blue hour of light Ma, kes many a magical sight, ",
+          "Day was set aside from the night. Owing to the creator's might. The artist's blue hour of light Ma, kes many a magical sight, ",
     ];
 
       try{

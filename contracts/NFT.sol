@@ -44,10 +44,10 @@ contract NFT is ERC721, Ownable {
         uint count =0;
         uint last = 0;
         for(uint i = 0; i < len ; i++){
-            if ( uint8(_b[i]) == (0x2E) || uint8(_b[i]) == (0x2C) || (len-1) == i ) {
+            if ( uint8(_b[i]) == (0x0A) || (len-1) == i ) {
                 _text = string(abi.encodePacked(_text,_tfront, NFTLibrary.toString(count*20 + 120),'">', NFTLibrary.substring(_s, last , ( i+1 ) ) ,_tend));
                 count++;
-                last = i+2;
+                last = i+1;
             }
         }
         return _text;
