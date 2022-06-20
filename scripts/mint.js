@@ -4,18 +4,18 @@ module.exports = async function(callback) {
   try {
     const nft = await NFT.deployed()
     const arr = [
-          '-the-balance-of-power.png', 
-          '-choose-your-gods.png',
-          'Life giving all powerful one,\nLight bringer to herald sweet dawn,\nThe father, the sun of heaven,\nThe name for god in countless tongues.',   
-          '-born-again.png',
-          'Reflected out from the inside,\nOur Gods can never truly die,\nEarthly beings here for the ride,\nSmiled down on by gods who guide.',
-          '-lost-way.png',
-          "Pull all shadows out of their hides,\nFace the chaos with open eyes,\nYou don't know without having tried,\nNever turn back, walk on with pride.",
-          '-tamed-monsters.png',
-          'Day was destroyed but now reborn,\nCold will gradually become warm,\nDew and wind act to cool skin,\nEyes wake as skies lighten.',
-          '-the-eternal-battle.png',
-          "Day was set aside from the night,\nOwing to the creator's might,\nThe artist's blue hour of light,\nMakes many a magical sight.",
-          '-towers-fall.png',
+  //        '-the-balance-of-power.png', 
+  //        '-choose-your-gods.png',
+  //      'Life giving all powerful one,\nLight bringer to herald sweet dawn,\nThe father, the sun of heaven,\nThe name for god in countless tongues.',   
+  //        '-born-again.png',
+  //        'Reflected out from the inside,\nOur Gods can never truly die,\nEarthly beings here for the ride,\nSmiled down on by gods who guide.',
+  //        '-lost-way.png',
+  //        "Pull all shadows out of their hides,\nFace the chaos with open eyes,\nYou don't know without having tried,\nNever turn back, walk on with pride.",
+  //        '-tamed-monsters.png',
+  //        'Day was destroyed but now reborn,\nCold will gradually become warm,\nDew and wind act to cool skin,\nEyes wake as skies lighten.',
+  //        '-the-eternal-battle.png',
+  //        "Day was set aside from the night,\nOwing to the creator's might,\nThe artist's blue hour of light,\nMakes many a magical sight.",
+  //        '-towers-fall.png',
     ];
 
     

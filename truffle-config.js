@@ -78,23 +78,14 @@ module.exports = {
       },
       network_id: networkId.Devnet
     },
-
-
    
-    mainnet0: {
-      network_id: "1", // Any network (default: none)
-      provider: () => {
-        const truffleProvider = new TruffleProvider(
-          mainnet_url,
-          { memonic: mainnet_mnemonic },
-          { shardID: 0, chainId: 1 },
-          { gasLimit: gasLimit, gasPrice: gasPrice }
-        );
-        const newAcc = truffleProvider.addByPrivateKey(mainnet_private_key);
-        truffleProvider.setSigner(newAcc);
-        return truffleProvider;
+    mainnet: {
+   provider: () => {
+        return new PrivateKeyProvider(process.env.MAINNET_PRIVATE_KEY, mainnet_url, networkId.Mainnet)
+      },
+      network_id: networkId.Mainnet
+        
       },
     },
-  }
 };
 

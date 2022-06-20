@@ -18,11 +18,11 @@ contract("NFT", (accounts) => {
     let r;
 
     const arr = [
-          'Life giving all powerful one, Light bringer to herald sweet dawn, The father, the sun of heaven, The name for god in countless tongues. ',   
-          'Reflected out from the inside, Our Gods can never truly die, Earthly beings here for the ride, Smiled down on by gods who guide. ',
-          "Pull all shadows out of their hides, Face the chaos with open eyes, You don't know without having tried, Never turn back, walk on with pride. ",
-          'Day was destroyed but now reborn, Cold will gradually become warm, Dew and wind act to cool skin, Eyes wake as skies lighten. ',
-          "Day was set aside from the night. Owing to the creator's might. The artist's blue hour of light Ma, kes many a magical sight, ",
+          'Life giving all powerful one,\nLight bringer to herald sweet dawn,\nThe father, the sun of heaven,\nThe name for god in countless tongues.',   
+          'Reflected out from the inside,\nOur Gods can never truly die,\nEarthly beings here for the ride,\nSmiled down on by gods who guide.',
+          "Pull all shadows out of their hides,\nFace the chaos with open eyes,\nYou don't know without having tried,\nNever turn back, walk on with pride.",
+          'Day was destroyed but now reborn,\nCold will gradually become warm,\nDew and wind act to cool skin,\nEyes wake as skies lighten. ',
+          "Day was set aside from the night,\nOwing to the creator's might,\nThe artist's blue hour of light,\nMakes many a magical sight.",
     ];
 
       try{
