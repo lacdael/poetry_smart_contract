@@ -32,6 +32,10 @@ contract NFTMarket is IERC721Receiver, ReentrancyGuard, Ownable {
 
     uint256 private _highest = 110000000000000000000;
 
+    function setHighestPrice( uint256 f ) external onlyOwner {
+        _highest = f;
+    }
+
     constructor(){
     }
 
@@ -137,8 +141,9 @@ contract NFTMarket is IERC721Receiver, ReentrancyGuard, Ownable {
             require( ! idMarketItem[itemId].sold , "The item must be available");
             
             IERC721( nftContract ).safeTransferFrom(address(this), msg.sender, tokenId);
-    
+            idMarketItem[itemId].owner = payable(msg.sender);
             idMarketItem[itemId].sold = true;
+            _itemsSold.increment(); //increment the total number of Items sold by 1
         }
 
         /// @notice function to create a sale

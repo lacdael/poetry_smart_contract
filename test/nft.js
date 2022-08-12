@@ -180,6 +180,7 @@ contract("NFT & NFTMarket", (accounts) => {
     console.log(`rmvApprovedContract( ${ nftInst.address }, { from: ${ accounts[0] } } )`);
      console.log(`transaction: ${ r["tx"] }`);
 
+
   });  
   
 
@@ -243,7 +244,19 @@ contract("NFT & NFTMarket", (accounts) => {
      r = await nftInst.walletOfOwner.call( accounts[1] ); 
      console.log(`walletOfOwner.call( ${accounts[1] } )`);
      console.log(JSON.stringify(  r, null , 2 ) );
+     
+     r = await marketInst.fetchMarketItems.call( );
+     console.log(`fetchMarketItems()`);
+     console.log(JSON.stringify(  r, null , 2 ) );
 
+     r = await marketInst.fetchMarketItems.call( );
+     console.log(`fetchMarketItems()`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+
+     r = await marketInst.removeMarketItem( nftInst.address , tkn1 , { from: accounts[0] });
+     console.log(`removeMarketItem( ${ nftInst.address }, ${ tkn1 })`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+ 
      r = await marketInst.fetchMarketItems.call( );
      console.log(`fetchMarketItems()`);
      console.log(JSON.stringify(  r, null , 2 ) );
@@ -405,6 +418,14 @@ contract("NFT & NFTMarket", (accounts) => {
 
     console.log(` max sell price: 110 one - ${ web3.utils.toWei("110", "ether") }`);
 
+     r = await marketInst.fetchMarketItems.call( );
+     console.log(`fetchMarketItems()`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+
+    r = await nftInst.walletOfOwner.call( accounts[0] ); 
+    console.log(`walletOfOwner.call( ${accounts[0] } )`);
+    console.log(JSON.stringify(  r, null , 2 ) );
+
      r = await nftInst.approve( marketInst.address , tkn1 );
      console.log(`approve( ${ marketInst.address } , ${ tkn1 } )`);
      console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
@@ -427,6 +448,10 @@ contract("NFT & NFTMarket", (accounts) => {
      console.log(`fetchMarketItems()`);
      console.log(JSON.stringify(  r, null , 2 ) );
 
+    r = await nftInst.walletOfOwner.call( accounts[0] ); 
+    console.log(`walletOfOwner.call( ${accounts[0] } )`);
+    console.log(JSON.stringify(  r, null , 2 ) );
+
      r = await marketInst.removeMarketItem( nftInst.address , tkn1 , { from: accounts[0] });
      console.log(`removeMarketItem( ${ nftInst.address }, ${ tkn1 })`);
      console.log(JSON.stringify(  r, null , 2 ) );
@@ -434,10 +459,106 @@ contract("NFT & NFTMarket", (accounts) => {
      r = await marketInst.removeMarketItem( nftInst.address , tkn2 , { from: accounts[1] });
      console.log(`removeMarketItem( ${ nftInst.address }, ${ tkn2 })`);
      console.log(JSON.stringify(  r, null , 2 ) );
-  
+ 
+
+ 
   });  
+  
+
+
+  const test10= it("mint sell remove", async () => {
+    let nftInst = await NFT.deployed();
+    console.log(`NFT instance@: ${ nftInst.address }`);
+    assertAddress( nftInst.address );
     
-  const test10= it("mint a bunch", async () => {
+    let marketInst = await Market.deployed();
+    console.log(`NFT instance@: ${ marketInst.address }`);
+    assertAddress( marketInst.address );
+   
+    let r;
+
+    r = await nftInst.mint("This is may new token!", { from:accounts[0] } );
+    console.log(`mint()`);
+    console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+    let tkn1 = r["receipt"]["logs"][0]["args"]["tokenId"];
+
+    r = await nftInst.mint("This is may new token!", { from:accounts[0] } );
+    console.log(`mint()`);
+    console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+    let tkn2 = r["receipt"]["logs"][0]["args"]["tokenId"];
+     
+    r = await marketInst.addApprovedContract( nftInst.address , { from : accounts[0] } );
+    console.log(`addApprovedContract( ${ nftInst.address }, { from: ${ accounts[0] } } )`);
+    console.log(`transaction: ${ r["tx"] }`);
+
+    let balance0 = await web3.eth.getBalance( accounts[0] );
+    console.log(`account: ${ accounts[0] } ballence: ${ web3.utils.fromWei(balance0,"ether") }`);
+    let balance1 = await web3.eth.getBalance( accounts[1] );
+    console.log(`account: ${ accounts[1] } ballence: ${ web3.utils.fromWei(balance1,"ether") }`);
+    let balance2 = await web3.eth.getBalance( accounts[2] );
+    console.log(`account: ${ accounts[2] } ballence: ${ web3.utils.fromWei(balance2,"ether") }`);
+
+    r = await marketInst.getMaxSalePrice.call( );
+     console.log(`getMaxSalePrice()`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+
+    console.log(` max sell price: 110 one - ${ web3.utils.toWei("110", "ether") }`);
+
+     r = await marketInst.fetchMarketItems.call( );
+     console.log(`fetchMarketItems()`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+
+    r = await nftInst.walletOfOwner.call( accounts[0] ); 
+    console.log(`walletOfOwner.call( ${accounts[0] } )`);
+    console.log(JSON.stringify(  r, null , 2 ) );
+
+     r = await nftInst.approve( marketInst.address , tkn1 );
+     console.log(`approve( ${ marketInst.address } , ${ tkn1 } )`);
+     console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+     
+     r = await marketInst.createMarketItem(
+         nftInst.address , tkn1 , web3.utils.toWei( "110", "ether" ) );
+     console.log(`createMarketItem( ${ nftInst.address }, ${ tkn1 }, ${ web3.utils.toWei( "2", "ether" ) } )`);
+     console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+
+     r = await nftInst.approve( marketInst.address , tkn2 );
+     console.log(`approve( ${ marketInst.address } , ${ tkn2 } )`);
+     console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+
+     r = await marketInst.createMarketItem(
+         nftInst.address , tkn2 , web3.utils.toWei( "110", "ether" ) );
+     console.log(`createMarketItem( ${ nftInst.address }, ${ tkn2 }, ${ web3.utils.toWei( "2", "ether" ) } )`);
+     console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+
+     r = await marketInst.fetchMarketItems.call( );
+     console.log(`fetchMarketItems()`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+
+    r = await nftInst.walletOfOwner.call( accounts[0] ); 
+    console.log(`walletOfOwner.call( ${accounts[0] } )`);
+    console.log(JSON.stringify(  r, null , 2 ) );
+
+     r = await marketInst.removeMarketItem( nftInst.address , tkn1 , { from: accounts[0] });
+     console.log(`removeMarketItem( ${ nftInst.address }, ${ tkn1 })`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+  
+     r = await marketInst.removeMarketItem( nftInst.address , tkn2 , { from: accounts[0] });
+     console.log(`removeMarketItem( ${ nftInst.address }, ${ tkn2 })`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+ 
+     r = await marketInst.fetchMarketItems.call( );
+     console.log(`fetchMarketItems()`);
+     console.log(JSON.stringify(  r, null , 2 ) );
+    
+    r = await nftInst.walletOfOwner.call( accounts[0] ); 
+    console.log(`walletOfOwner.call( ${accounts[0] } )`);
+    console.log(JSON.stringify(  r, null , 2 ) );
+
+
+ 
+  });  
+ 
+  const test11= it("mint a bunch", async () => {
     let nftInst = await NFT.deployed();
     console.log(`NFT instance@: ${ nftInst.address }`);
     assertAddress( nftInst.address );
@@ -446,15 +567,15 @@ contract("NFT & NFTMarket", (accounts) => {
 
     const arr = [ '-the-balance-of-power.png', 
           '-choose-your-gods.png',
-          'Life giving all powerful one, Light bringer to herald sweet dawn, The father, the sun of heaven, The name for god in countless tongues.',   
+           'Life giving all powerful one,\nLight bringer to herald sweet dawn,\nThe father, the sun of heaven,\nThe name for god in countless tongues.',   
+          'Reflected out from the inside,\nOur Gods can never truly die,\nEarthly beings here for the ride,\nSmiled down on by gods who guide.',
+          "Pull all shadows out of their hides,\nFace the chaos with open eyes,\nYou don't know without having tried,\nNever turn back, walk on with pride.",
+          'Day was destroyed but now reborn,\nCold will gradually become warm,\nDew and wind act to cool skin,\nEyes wake as skies lighten. ',
+          "Day was set aside from the night,\nOwing to the creator's might,\nThe artist's blue hour of light,\nMakes many a magical sight.",
           '-born-again.png',
-          'Reflected out from the inside, Our Gods can never truly die, Earthly beings here for the ride, Smiled down on by gods who guide.',
           '-lost-way.png',
-          "Pull all shadows out of their hides, Face the chaos with open eyes, You don't know without having tried, Never turn back, walk on with pride.",
           '-tamed-monsters.png',
-          'Day was destroyed but now reborn, Cold will gradually become warm, Dew and wind act to cool skin, Eyes wake as skies lighten.',
           '-the-eternal-battle.png',
-          "Day was set aside from the night, Owing to the creator's might, The artist's blue hour of light, Makes many a magical sight.",
           '-towers-fall.png',
     ];
 
@@ -471,6 +592,40 @@ contract("NFT & NFTMarket", (accounts) => {
     }
 
  });
+
+
+const test12= it("mint a bunch when not baseURI - should render as text", async () => {
+    let nftInst = await NFT.deployed();
+    console.log(`NFT instance@: ${ nftInst.address }`);
+    assertAddress( nftInst.address );
+    
+    await nftInst.setBaseURI( "", { from: accounts[0] } );
+    
+    let r;
+
+    const arr = [ '-the-balance-of-power.png', 
+          '-choose-your-gods.png',
+          '-born-again.png',
+          '-lost-way.png',
+          '-tamed-monsters.png',
+          '-the-eternal-battle.png',
+          '-towers-fall.png',
+    ];
+
+    let tkn;
+    for ( let i =0; i < arr.length; i++) {
+        r = await nftInst.mint( arr[i++] , { from:accounts[0] } );
+        console.log(`mint()`);
+        console.log(JSON.stringify(  r["receipt"]["logs"][0]["args"], null , 2 ) );
+        tkn = r["receipt"]["logs"][0]["args"]["tokenId"];
+
+        r = await nftInst.tokenURI.call( tkn ); 
+        console.log(`tokenURI( ${1} )`);
+        console.log(JSON.stringify(  r, null , 2 ) );
+    }
+
+ });
+
 
 });
 

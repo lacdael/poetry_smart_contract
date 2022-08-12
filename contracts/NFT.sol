@@ -63,9 +63,9 @@ contract NFT is ERC721, Ownable {
             for ( uint8 i = 0 ; i < _data.length ; i++ ) {
                 if ( _data[ i ] == 0x2D ) _data[i] = 0x20;
                 if ( i >0 && _data[i -1] == 0x20 && ( _data[i] >= 0x61 && _data[i] <= 0x7A ) ) _data[i] =  bytes1( uint8(_data[i]) - 0x20);
-                if ( _data[ i ] == 0x2E ) {
-                    for ( i; i < _data.length; i++ ) _data[i] = 0x20;
-                } 
+                if ( _data[ i ] == 0x2E && i+1 < _data.length ) {
+                    for ( uint16 j  = i + 1 ; j < _data.length; j++ ) _data[j] = 0x20;
+                }
             }
 
             uint8 bgR = uint8( ( ( block.number & 0xff ) + _tokenId ) % 0xFF );
